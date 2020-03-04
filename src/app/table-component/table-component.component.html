@@ -1,0 +1,39 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="filterSearch($event)">
+  </mat-form-field>
+</form>
+
+<table mat-table [dataSource]="mutableAutomobiles" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>
+      Id
+      <button (click)="sortIdColumn()">sort</button>
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="manufacturer">
+    <th mat-header-cell *matHeaderCellDef>
+      Manufacturer
+      <button (click)="sortManufacturerColumn()">sort</button>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <span [outerHTML]="element.manufacturer | boldText: 'Ford'"></span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="model">
+    <th mat-header-cell *matHeaderCellDef>
+      Model
+      <button (click)="sortModelColumn()">sort</button>
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.model | uppercase}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+</table>
