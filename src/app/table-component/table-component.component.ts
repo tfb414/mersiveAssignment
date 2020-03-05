@@ -6,7 +6,7 @@ interface Automobile {
   model: string;
 }
 
-enum sortState {
+enum sortStateDefaults {
   none = 'NONE',
   ascending = 'ASCENDING',
   descending = 'DESCENDING'
@@ -23,9 +23,12 @@ export class TableComponentComponent implements OnInit {
   mutableAutomobiles: Automobile[] | [];
 
   sortState: string[] = ['NONE', 'ASCENDING', 'DESCENDING'];
-  modelSortStates: string[] = [...this.sortState];
-  manufacturerSortStates: string[] = [...this.sortState];
-  idSortStates: string[] = ['ASCENDING', 'DESCENDING'];
+
+  columnSortStates: any = {
+    model: 'NONE',
+    manufacturer: 'NONE',
+    id: 'NONE'
+  };
 
 
   constructor() {
@@ -46,39 +49,30 @@ export class TableComponentComponent implements OnInit {
   }
 
   sortData(columnName, rowSortState) {
-    if (rowSortState === sortState.none) {
-      this.mutableAutomobiles = [...this.automobiles];
-    } else {
-      const sortOrder = rowSortState === sortState.ascending ? [-1, 1] : [1, -1];
-      this.mutableAutomobiles = [...this.mutableAutomobiles
-        .sort((a, b) => {
-          if (a[columnName] < b[columnName]) {
-            return sortOrder[0];
-          }
-          if (a[columnName] > b[columnName]) {
-            return sortOrder[1];
-          }
-          return 0;
-        })];
-    }
+    const sortOrder = rowSortState === sortStateDefaults.ascending ? [-1, 1] : [1, -1];
+    this.mutableAutomobiles = [...this.mutableAutomobiles
+      .sort((a, b) => {
+        if (a[columnName] < b[columnName]) {
+          return sortOrder[0];
+        }
+        if (a[columnName] > b[columnName]) {
+          return sortOrder[1];
+        }
+        return 0;
+      })];
   }
 
-  sortModelColumn() {
-    this.modelSortStates.push(this.modelSortStates.shift());
-    const rowSortState = this.modelSortStates[0];
-    this.sortData('model', rowSortState);
+  sortColumn(columnName) {
+    this.columnSortStates[columnName] = this.getNextSortState(columnName);
+    this.columnSortStates[columnName] === sortStateDefaults.none
+      ? this.mutableAutomobiles = [...this.automobiles]
+      : this.sortData(columnName, this.columnSortStates[columnName]);
   }
 
-  sortManufacturerColumn() {
-    this.manufacturerSortStates.push(this.manufacturerSortStates.shift());
-    const rowSortState = this.manufacturerSortStates[0];
-    this.sortData('manufacturer', rowSortState);
-  }
-
-  sortIdColumn() {
-    this.idSortStates.push(this.idSortStates.shift());
-    const rowSortState = this.idSortStates[0];
-    this.sortData('id', rowSortState);
+  getNextSortState(columnName) {
+    const currentIndex = this.sortState.indexOf(this.columnSortStates[columnName]);
+    const updatedSortStateIndex  = currentIndex > 1 ? 0 : currentIndex + 1;
+    return this.sortState[updatedSortStateIndex];
   }
 
 }

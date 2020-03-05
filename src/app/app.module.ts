@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { BoldTextPipe } from './pipes/bold-text.pipe';
 import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {CommonModule} from '@angular/common';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    CommonModule
+    CommonModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

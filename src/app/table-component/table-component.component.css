@@ -2,3 +2,7 @@ table {
   width: 60%;
   margin: auto;
 }
+
+.material-icons {
+  font-size: 20px;
+}
