@@ -1,6 +1,14 @@
-table {
+.center {
   width: 60%;
   margin: auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
 }
 
 .material-icons {

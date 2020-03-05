@@ -1,45 +1,50 @@
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <mat-label>Search</mat-label>
-    <input matInput (keyup)="filterSearch($event)">
-  </mat-form-field>
-</form>
+<h1>Reusable Table Component</h1>
 
-<table mat-table [dataSource]="mutableAutomobiles" class="mat-elevation-z8">
 
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>
-      Id
-      <button mat-button (click)="sortColumn('id')">
-      <i class="material-icons">sort</i>
-      </button>
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
+<div class="center">
+  <form>
+    <mat-form-field class="full-width">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="filterSearch($event)">
+    </mat-form-field>
+  </form>
+  <table mat-table [dataSource]="displayAutomobilesData" class="mat-elevation-z8 full-width">
 
-  <ng-container matColumnDef="manufacturer">
-    <th mat-header-cell *matHeaderCellDef>
-      Manufacturer
-      <button mat-button (click)="sortColumn('manufacturer')">
-        <i class="material-icons">sort</i>
-      </button>
-    </th>
-    <td mat-cell *matCellDef="let element">
-      <span [outerHTML]="element.manufacturer | boldText: 'Ford'"></span>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>
+        Id
+        <button mat-button (click)="sortColumn('id')">
+          <i class="material-icons">sort</i>
+        </button>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="model">
-    <th mat-header-cell *matHeaderCellDef>
-      Model
-      <button mat-button (click)="sortColumn('model')">
-        <i class="material-icons">sort</i>
-      </button>
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.model | uppercase}} </td>
-  </ng-container>
+    <ng-container matColumnDef="manufacturer">
+      <th mat-header-cell *matHeaderCellDef>
+        Manufacturer
+        <button mat-button (click)="sortColumn('manufacturer')">
+          <i class="material-icons">sort</i>
+        </button>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <span [outerHTML]="element.manufacturer | boldText: 'Ford'"></span>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+    <ng-container matColumnDef="model">
+      <th mat-header-cell *matHeaderCellDef>
+        Model
+        <button mat-button (click)="sortColumn('model')">
+          <i class="material-icons">sort</i>
+        </button>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.model | uppercase}} </td>
+    </ng-container>
 
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+  </table>
+</div>
+

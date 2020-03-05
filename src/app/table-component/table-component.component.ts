@@ -20,7 +20,7 @@ enum sortStateDefaults {
 export class TableComponentComponent implements OnInit {
   @Input() automobiles: Automobile[];
   displayColumns: string[] = ['id', 'manufacturer', 'model'];
-  mutableAutomobiles: Automobile[] | [];
+  displayAutomobilesData: Automobile[] | [];
 
   sortState: string[] = ['NONE', 'ASCENDING', 'DESCENDING'];
 
@@ -35,11 +35,11 @@ export class TableComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mutableAutomobiles = [...this.automobiles];
+    this.displayAutomobilesData = [...this.automobiles];
   }
 
   filterSearch(term): void {
-    this.mutableAutomobiles = this.automobiles.filter(automobile => {
+    this.displayAutomobilesData = this.automobiles.filter(automobile => {
       return Object.values(automobile).some(value =>
         value.toString().toLowerCase().includes(
           term.target.value.toString().toLowerCase()
@@ -50,7 +50,7 @@ export class TableComponentComponent implements OnInit {
 
   sortData(columnName, rowSortState) {
     const sortOrder = rowSortState === sortStateDefaults.ascending ? [-1, 1] : [1, -1];
-    this.mutableAutomobiles = [...this.mutableAutomobiles
+    this.displayAutomobilesData = [...this.displayAutomobilesData
       .sort((a, b) => {
         if (a[columnName] < b[columnName]) {
           return sortOrder[0];
@@ -65,7 +65,7 @@ export class TableComponentComponent implements OnInit {
   sortColumn(columnName) {
     this.columnSortStates[columnName] = this.getNextSortState(columnName);
     this.columnSortStates[columnName] === sortStateDefaults.none
-      ? this.mutableAutomobiles = [...this.automobiles]
+      ? this.displayAutomobilesData = [...this.automobiles]
       : this.sortData(columnName, this.columnSortStates[columnName]);
   }
 
